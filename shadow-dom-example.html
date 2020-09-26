@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Shadow DOM</title>
+  <style>
+    .boxed {
+      padding: 1rem;
+      display: inline-block;
+      border: 1px solid black;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Minimal Shadow DOM Example</h1>
+
+  <p>
+    This is a minimal example of limiting the scope of CSS by attaching a shadow DOM.
+    Item 2 below is within a shadow document, so its internal CSS does not leak out.
+  </p>
+
+  <div class="boxed">
+
+    <p>
+      1. This text should be black (or the default color).
+    </p>
+
+    <div id="shadow-holder">
+    </div>
+
+    <p>
+      3. This text should be black (or the default color).
+    </p>
+
+  </div>
+
+  <hr>
+  <div>
+    Further reference:
+    <ul>
+      <li><a href="https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM">Using shadow DOM</a>, MDN Web Docs</li>
+      <li><a href="https://developers.google.com/web/fundamentals/web-components/shadowdom">Shadow DOM v1: Self-Contained Web Components</a> by Eric Bidelman, Google Developers Web Fundamentals</li>
+    </ul>   
+  </div>
+
+  <script>
+    let shadow = document.getElementById('shadow-holder').attachShadow({mode: 'open'});
+    let shadow_internals = document.createElement('div');
+    shadow_internals.innerHTML =
+      "<style> \
+        p { \
+          color: red; \
+        } \
+      </style> \
+      <p>2. (Inside shadow DOM) This text should be red.</p>";
+    shadow.appendChild(shadow_internals);
+  </script>
+</body>
+</html>
